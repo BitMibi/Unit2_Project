@@ -34,7 +34,7 @@ public class CameraControl : MonoBehaviour
         currentPosition = cameraList[0];
         nextPosition = cameraList[nextJump];
 
-        //Change which cameras are on
+        //Change which cameras are on -- 'https://discussions.unity.com/t/changing-between-cameras/3254'
         previousPosition.enabled = false;
         currentPosition.enabled = true;
         nextPosition.enabled = false;
