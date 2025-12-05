@@ -814,9 +814,10 @@ GameObject:
   - component: {fileID: 1406564123}
   - component: {fileID: 1406564122}
   - component: {fileID: 1406564129}
+  - component: {fileID: 1406564130}
   m_Layer: 0
   m_Name: PlayerCube
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -834,7 +835,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
-  pickupObjects: {fileID: 6971934699736522714, guid: ed1630d38ba12a8458214b9b56c80590, type: 3}
+  liftable: {fileID: 6971934699736522714, guid: ed1630d38ba12a8458214b9b56c80590, type: 3}
 --- !u!114 &1406564123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -996,6 +997,22 @@ MonoBehaviour:
   cameraList:
   - {fileID: 1112965907}
   - {fileID: 2084522264}
+--- !u!138 &1406564130
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406564121}
+  serializedVersion: 1
+  m_ConnectedBody: {fileID: 0}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: 1
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!1 &1572398634
 GameObject:
   m_ObjectHideFlags: 0
@@ -1572,6 +1589,10 @@ PrefabInstance:
     - target: {fileID: 6971934699736522714, guid: ed1630d38ba12a8458214b9b56c80590, type: 3}
       propertyPath: m_Name
       value: puzzleCube
+      objectReference: {fileID: 0}
+    - target: {fileID: 6971934699736522714, guid: ed1630d38ba12a8458214b9b56c80590, type: 3}
+      propertyPath: m_TagString
+      value: PickUpTag
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

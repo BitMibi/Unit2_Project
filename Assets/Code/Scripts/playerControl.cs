@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,14 +14,17 @@ public class playerControl : MonoBehaviour
 
 
     //Moving objects variables
-    bool holding = false;
-    public GameObject pickupObjects;
+    private bool holding = false;
+    public GameObject liftable;
+    private FixedJoint fixedJoint;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        fixedJoint = GetComponent<FixedJoint>();
+        
     }
 
     void OnMove(InputValue movementValue)
@@ -33,7 +38,7 @@ public class playerControl : MonoBehaviour
 
     void OnInteract()
     {
-        if (!holding)
+        if (!holding && liftable.CompareTag("PickUpTag"))
         {
             holding = true;
             pickUpObjects();
@@ -47,12 +52,17 @@ public class playerControl : MonoBehaviour
     //Used to pick up objects to the top of the players head
     void pickUpObjects()
     {
-
+        fixedJoint.connectedBody = liftable.GetComponent<Rigidbody>();
+        fixedJoint.anchor = transform.position + new Vector3(0, 1, 0);
+        liftable.transform.position = fixedJoint.anchor;
     }
+
+    
 
     void dropObjects()
     {
-
+        //fixedJoint.breakForce = 1;
+        //fixedJoint.currentForce = 1;
     }
 
     // Update is called once per frame
