@@ -4,10 +4,16 @@ using UnityEngine.InputSystem;
 public class playerControl : MonoBehaviour
 {
     private Rigidbody rb;
-
+   
+    //Movement Variables
     private float movementX;
     private float movementY;
     public float speed;
+
+
+    //Moving objects variables
+    bool holding = false;
+    public GameObject pickupObjects;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -22,6 +28,30 @@ public class playerControl : MonoBehaviour
 
         movementX = movement.x;
         movementY = movement.y;
+
+    }
+
+    void OnInteract()
+    {
+        if (!holding)
+        {
+            holding = true;
+            pickUpObjects();
+        }
+        else
+        {
+            holding = false;
+            dropObjects();
+        }
+    }
+    //Used to pick up objects to the top of the players head
+    void pickUpObjects()
+    {
+
+    }
+
+    void dropObjects()
+    {
 
     }
 

@@ -26,7 +26,7 @@ public class CameraControl : MonoBehaviour
     void Start()
     {
         //Create a position for previous and next to jump to
-        previousJump = cameraList.Length;
+        previousJump = cameraList.Length - 1;
         nextJump = 1;
 
         //Set the Positions to the objects in cameraList   
@@ -51,7 +51,7 @@ public class CameraControl : MonoBehaviour
             previousJump--;
         }
         else { //To avoid going outside array range
-            previousJump = cameraList.Length;
+            previousJump = cameraList.Length - 1;
         }
 
         //Switch to previous Camera
@@ -67,8 +67,8 @@ public class CameraControl : MonoBehaviour
 
     void OnNext()
     {
-        //Decrease previousJump
-        if (previousJump < cameraList.Length)
+        //Increase nextJump
+        if (nextJump < (cameraList.Length - 1))
         {
             nextJump++;
         }
