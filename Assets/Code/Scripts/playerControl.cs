@@ -15,18 +15,24 @@ public class playerControl : MonoBehaviour
 
     //Moving objects variables
     private bool holding = false;
+    private float pickUpRange = 30;
+    private bool inRange = false;
     public GameObject liftable;
-    private FixedJoint fixedJoint;
+    //Empty objects to keep the liftable in place
+    public GameObject holdPosition;
+    public GameObject dropPosition;
+    
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        fixedJoint = GetComponent<FixedJoint>();
         
     }
 
+    
+    //Used to get move inputs
     void OnMove(InputValue movementValue)
     {
         Vector2 movement = movementValue.Get<Vector2>();
@@ -36,12 +42,28 @@ public class playerControl : MonoBehaviour
 
     }
 
+    //USed to check if player is within pick up range
+    bool GetIfInRange(){
+        if (transform.position.x <= liftable.transform.position.x + pickUpRange){
+            if (transform.position.y <= liftable.transform.position.y + pickUpRange){
+                if (transform.position.z <= liftable.transform.position.z + pickUpRange){
+                    inRange = true;
+                }
+            }
+        }
+        
+        return inRange;
+    
+
+    }
+
+    //Used to check for Interact input
     void OnInteract()
     {
-        if (!holding && liftable.CompareTag("PickUpTag"))
+        if (!holding && liftable.CompareTag("PickUpTag") && GetIfInRange())
         {
             holding = true;
-            pickUpObjects();
+           
         }
         else
         {
@@ -49,27 +71,38 @@ public class playerControl : MonoBehaviour
             dropObjects();
         }
     }
+
     //Used to pick up objects to the top of the players head
     void pickUpObjects()
     {
-        fixedJoint.connectedBody = liftable.GetComponent<Rigidbody>();
-        fixedJoint.anchor = transform.position + new Vector3(0, 1, 0);
-        liftable.transform.position = fixedJoint.anchor;
+        liftable.transform.position = holdPosition.transform.position;
+    }
+
+    
+    //Used to drop objects in front of player
+    void dropObjects()
+    {
+        liftable.transform.position = dropPosition.transform.position;
     }
 
     
 
-    void dropObjects()
-    {
-        //fixedJoint.breakForce = 1;
-        //fixedJoint.currentForce = 1;
+    void Update(){
+        //To move objects
+        if (holding)
+        {
+            pickUpObjects();
+        }
     }
 
-    // Update is called once per frame
+    // FixedUpdate is called once per frame
     void FixedUpdate()
     {
         Vector3 movePlayer = new Vector3(movementX, 0.0f, movementY); 
 
         rb.AddForce(movePlayer * speed);
+
+        
     }
+
 }
