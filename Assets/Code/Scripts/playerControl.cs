@@ -15,7 +15,6 @@ public class playerControl : MonoBehaviour
 
     //Moving objects variables
     private bool holding = false;
-    private float pickUpRange = 30;
     private bool inRange = false;
     public GameObject liftable;
     //Empty objects to keep the liftable in place
@@ -42,30 +41,25 @@ public class playerControl : MonoBehaviour
 
     }
 
-    //USed to check if player is within pick up range
-    bool GetIfInRange(){
-        if (transform.position.x <= liftable.transform.position.x + pickUpRange){
-            if (transform.position.y <= liftable.transform.position.y + pickUpRange){
-                if (transform.position.z <= liftable.transform.position.z + pickUpRange){
-                    inRange = true;
-                }
-            }
-        }
-        
-        return inRange;
-    
+    void OnTriggerEnter(Collider liftable)
+    {
+        inRange = true;
+    }
 
+    private void OnTriggerExit(Collider liftable)
+    {
+        inRange = false;
     }
 
     //Used to check for Interact input
     void OnInteract()
     {
-        if (!holding && liftable.CompareTag("PickUpTag") && GetIfInRange())
+        if (!holding && liftable.CompareTag("PickUpTag") && inRange)
         {
             holding = true;
            
         }
-        else
+        else if (holding)
         {
             holding = false;
             dropObjects();
@@ -88,11 +82,7 @@ public class playerControl : MonoBehaviour
     
 
     void Update(){
-        //To move objects
-        if (holding)
-        {
-            pickUpObjects();
-        }
+       
     }
 
     // FixedUpdate is called once per frame
@@ -102,7 +92,11 @@ public class playerControl : MonoBehaviour
 
         rb.AddForce(movePlayer * speed);
 
-        
+        //To move objects
+        if (holding)
+        {
+            pickUpObjects();
+        }
     }
 
 }

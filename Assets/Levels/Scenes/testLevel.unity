@@ -849,7 +849,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
-  liftable: {fileID: 6971934699736522714, guid: ed1630d38ba12a8458214b9b56c80590, type: 3}
+  liftable: {fileID: 894033935}
   holdPosition: {fileID: 1548696186}
   dropPosition: {fileID: 1699146947}
 --- !u!114 &1406564123
