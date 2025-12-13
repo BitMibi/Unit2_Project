@@ -14,7 +14,7 @@ public class CameraControl : MonoBehaviour
 
 
     private Camera previousPosition;
-    private Camera currentPosition;
+    public Camera currentPosition;      //Public to be used to playerContol.cs
     private Camera nextPosition;
 
     private int previousJump;

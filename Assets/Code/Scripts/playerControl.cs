@@ -11,7 +11,14 @@ public class playerControl : MonoBehaviour
     //Movement Variables
     private float movementX;
     private float movementY;
-    public float speed;
+    public float speed;     //Speed used on ground
+    public float airSpeed; //Speed used in air
+
+    public float jumpForce; // Force used when jumping
+    public GameObject GroundPlane;
+    private bool isGrounded; //Checks if grounded
+    //For relative to camera -- from 'https://www.youtube.com/watch?v=LaO1GDf2v3c'
+    public CameraControl cameraControl;
 
 
     //Moving objects variables
@@ -21,6 +28,8 @@ public class playerControl : MonoBehaviour
     //Empty objects to keep the liftable in place
     public GameObject holdPosition;
     public GameObject dropPosition;
+    
+
     
 
 
@@ -39,16 +48,54 @@ public class playerControl : MonoBehaviour
         Vector2 movement = movementValue.Get<Vector2>();
         
 
-        //*Change input based on camera -- from https://www.reddit.com/r/Unity3D/comments/eklm3r/how_to_move_player_relative_to_camera/
+        //*Change input based on camera -- from 'https://www.reddit.com/r/Unity3D/comments/eklm3r/how_to_move_player_relative_to_camera/'
         
         movementX = movement.x;
         movementY = movement.y;
 
-        movementX *=  Camera.current.transform.right.x; //FIX IN THE MORNIHNG
-        movementY *=  Camera.current.transform.up.z;
+        movementX *=  cameraControl.currentPosition.transform.right.x; 
+        if (movementX != 0) //Correction of speed to 1
+        {
+            if (movementX < 0)
+            {
+                movementX = -1;
+            }
+            else if (movementX > 0)
+            {
+                movementX = 1;
+            }
+        }
 
+        movementY *=  cameraControl.currentPosition.transform.right.x;
+        if (movementY != 0) //Correction of speed to 1
+        {
+            if (movementY < 0)
+            {
+                movementY = -1;
+            }
+            else if (movementY > 0)
+            {
+                movementY = 1;
+            }
+        }
     }
 
+
+    //Used to Jump
+    private void OnCollisionEnter(Collision GroundPlane)
+    {
+        isGrounded = true;
+    }
+    void OnJump()
+    {
+        if (isGrounded)
+        {
+            rb.AddForce(new Vector3(0, jumpForce, 0));
+        }
+        isGrounded = false;
+    }
+
+    //Checks if player object is in range to pick up objects
     void OnTriggerEnter(Collider liftable)
     {
         inRange = true;
@@ -92,23 +139,32 @@ public class playerControl : MonoBehaviour
     {
         if (movementX != 0 || movementY != 0)
         {
+            //Definitely NOT taken from 'CMP112 Week 04 Lab -- Unity Introduction'
             float angle = Mathf.Atan2(movementX, movementY) * Mathf.Rad2Deg;
-            Vector3 rotation = new Vector3(0, angle, 0); //Rotate around the z-axis
+            Vector3 rotation = new Vector3(0, angle, 0); 
             transform.eulerAngles = rotation;
         }
     }
 
-   
+    
+
 
     // FixedUpdate is called once per frame
     void FixedUpdate()
     {
         Vector3 movePlayer = new Vector3(movementX, 0.0f, movementY);
+        //If grounded, move at max speed. Otherwise move slightly
+        if (isGrounded)
+        {
+            rb.AddForce(movePlayer * speed);
+        }
+        else if (!isGrounded)
+        {
+            rb.AddForce(movePlayer * airSpeed);
+        }
 
-        rb.AddForce(movePlayer * speed);
-
-        //Rotate Player Object
-        rotatePlayer();
+            //Rotate Player Object
+            rotatePlayer();
 
         //To move objects
         if (holding)
