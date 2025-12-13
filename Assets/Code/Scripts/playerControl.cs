@@ -2,6 +2,7 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class playerControl : MonoBehaviour
 {
@@ -34,10 +35,17 @@ public class playerControl : MonoBehaviour
     //Used to get move inputs
     void OnMove(InputValue movementValue)
     {
-        Vector2 movement = movementValue.Get<Vector2>();
 
+        Vector2 movement = movementValue.Get<Vector2>();
+        
+
+        //*Change input based on camera -- from https://www.reddit.com/r/Unity3D/comments/eklm3r/how_to_move_player_relative_to_camera/
+        
         movementX = movement.x;
         movementY = movement.y;
+
+        movementX *=  Camera.current.transform.right.x; //FIX IN THE MORNIHNG
+        movementY *=  Camera.current.transform.up.z;
 
     }
 
@@ -70,6 +78,7 @@ public class playerControl : MonoBehaviour
     void pickUpObjects()
     {
         liftable.transform.position = holdPosition.transform.position;
+        liftable.transform.rotation = holdPosition.transform.rotation;
     }
 
     
@@ -79,18 +88,27 @@ public class playerControl : MonoBehaviour
         liftable.transform.position = dropPosition.transform.position;
     }
 
-    
-
-    void Update(){
-       
+    void rotatePlayer()
+    {
+        if (movementX != 0 || movementY != 0)
+        {
+            float angle = Mathf.Atan2(movementX, movementY) * Mathf.Rad2Deg;
+            Vector3 rotation = new Vector3(0, angle, 0); //Rotate around the z-axis
+            transform.eulerAngles = rotation;
+        }
     }
+
+   
 
     // FixedUpdate is called once per frame
     void FixedUpdate()
     {
-        Vector3 movePlayer = new Vector3(movementX, 0.0f, movementY); 
+        Vector3 movePlayer = new Vector3(movementX, 0.0f, movementY);
 
         rb.AddForce(movePlayer * speed);
+
+        //Rotate Player Object
+        rotatePlayer();
 
         //To move objects
         if (holding)
