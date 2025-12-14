@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6525173318835908325}
   - component: {fileID: 8537001741010903315}
   m_Layer: 0
-  m_Name: puzzleCube
+  m_Name: heavyCube
   m_TagString: PickUpTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
