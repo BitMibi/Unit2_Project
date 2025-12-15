@@ -19,7 +19,7 @@ public class buttonCheck : MonoBehaviour
     public GameObject downPos; //Up and down positions to move to
 
     public bool heavyButton; //Bool to differentiate between heavy and light buttons
-    private string lightCube = "LightIndicator";
+   
 
     void Start()
     {
@@ -58,7 +58,7 @@ public class buttonCheck : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
 
-        if (heavyButton && collision.gameObject.GetComponent(lightCube))     //Heavy buttons cannot be pushed down by light cubes.
+        if (heavyButton && collision.gameObject.transform.childCount == 0)     //Heavy buttons cannot be pushed down by light cubes. (Light cubes have exactly 1 child.)
         {
             collisionsHappening++;
             if (!isDown && collisionsHappening >= 1)
@@ -81,7 +81,7 @@ public class buttonCheck : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (heavyButton && collision.gameObject.name != "LightCube")
+        if (heavyButton && collision.gameObject.transform.childCount == 0)
         {
             collisionsHappening--;
             if (isDown && collisionsHappening == 0)
