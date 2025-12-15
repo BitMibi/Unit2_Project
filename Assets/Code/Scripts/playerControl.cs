@@ -24,7 +24,10 @@ public class playerControl : MonoBehaviour
     //Moving objects variables
     private bool holding = false;
     private bool inRange = false;
-    public GameObject liftable;
+    public GameObject[] liftables;
+    private int arrayPos = 0;   //Used to check which object in level is in range
+   
+
     //Empty objects to keep the liftable in place
     public GameObject holdPosition;
     public GameObject dropPosition;
@@ -99,17 +102,30 @@ public class playerControl : MonoBehaviour
     void OnTriggerEnter(Collider liftable)
     {
         inRange = true;
+        if (!holding)
+        {
+            for (int loopCounter = 0; loopCounter < liftables.Length; loopCounter++)
+            {
+                if (liftables[loopCounter].CompareTag("PickUpTag") && liftables[loopCounter].name == liftable.name)
+                {
+                    arrayPos = loopCounter;
+                    break;
+                }
+            }
+        }
     }
 
     private void OnTriggerExit(Collider liftable)
     {
+        
         inRange = false;
     }
 
     //Used to check for Interact input
     void OnInteract()
     {
-        if (!holding && liftable.CompareTag("PickUpTag") && inRange)
+        
+        if (!holding && liftables[arrayPos].CompareTag("PickUpTag") && inRange)
         {
             holding = true;
            
@@ -124,15 +140,15 @@ public class playerControl : MonoBehaviour
     //Used to pick up objects to the top of the players head
     void pickUpObjects()
     {
-        liftable.transform.position = holdPosition.transform.position;
-        liftable.transform.rotation = holdPosition.transform.rotation;
+        liftables[arrayPos].transform.position = holdPosition.transform.position;
+        liftables[arrayPos].transform.rotation = holdPosition.transform.rotation;
     }
 
     
     //Used to drop objects in front of player
     void dropObjects()
     {
-        liftable.transform.position = dropPosition.transform.position;
+        liftables[arrayPos].transform.position = dropPosition.transform.position;
     }
 
     void rotatePlayer()
