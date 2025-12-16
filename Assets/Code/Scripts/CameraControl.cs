@@ -8,7 +8,11 @@ using System.Collections.Generic;
 public class CameraControl : MonoBehaviour
 {
     //List of cameras in current scene
-    public Camera[] cameraList;
+    public Camera[] room0Cameras;    //List of cameras in specific rooms
+    public Camera[] room1Cameras;   
+    public Camera[] room2Cameras;   //Max 3 rooms per scene 
+    public int roomID = 0;  //Which room to switch to -- Public for roomChanger.cs
+    private Camera[] currentRoom; //Stores which room player is currently in
     
     
 
@@ -25,14 +29,20 @@ public class CameraControl : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        currentRoom = room0Cameras;
+
+        
+
+        
+
         //Create a position for previous and next to jump to
-        previousJump = cameraList.Length - 1;
+        previousJump = currentRoom.Length - 1;
         nextJump = 1;
 
-        //Set the Positions to the objects in cameraList   
-        previousPosition = cameraList[previousJump];
-        currentPosition = cameraList[0];
-        nextPosition = cameraList[nextJump];
+        //Set the Positions to the objects in currentRoom   
+        previousPosition = currentRoom[previousJump];
+        currentPosition = currentRoom[0];
+        nextPosition = currentRoom[nextJump];
 
         //Change which cameras are on -- 'https://discussions.unity.com/t/changing-between-cameras/3254'
         previousPosition.enabled = false;
@@ -51,7 +61,7 @@ public class CameraControl : MonoBehaviour
             previousJump--;
         }
         else { //To avoid going outside array range
-            previousJump = cameraList.Length - 1;
+            previousJump = currentRoom.Length - 1;
         }
 
         //Switch to previous Camera
@@ -61,14 +71,14 @@ public class CameraControl : MonoBehaviour
         //Change camera positions
         nextPosition = currentPosition;
         currentPosition = previousPosition;
-        previousPosition = cameraList[previousJump];
+        previousPosition = currentRoom[previousJump];
 
     }
 
     void OnNext()
     {
         //Increase nextJump
-        if (nextJump < (cameraList.Length - 1))
+        if (nextJump < (currentRoom.Length - 1))
         {
             nextJump++;
         }
@@ -84,13 +94,34 @@ public class CameraControl : MonoBehaviour
         //Change the camera positions
         previousPosition = currentPosition;
         currentPosition = nextPosition;
-        nextPosition = cameraList[nextJump];
+        nextPosition = currentRoom[nextJump];
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void RoomChanged()
     {
-        
+
+        switch (roomID)
+        {
+            case 0: currentRoom = room0Cameras; break;
+            case 1: currentRoom = room1Cameras; break;
+            case 2: currentRoom = room2Cameras; break;
+            default: break;
+        }
+        //Create a position for previous and next to jump to
+        previousJump = currentRoom.Length - 1;
+        nextJump = 1;
+
+        //Set the Positions to the objects in currentRoom   
+        previousPosition = currentRoom[previousJump];
+        currentPosition = currentRoom[0];
+        nextPosition = currentRoom[nextJump];
+
+        //Change which cameras are on -- 'https://discussions.unity.com/t/changing-between-cameras/3254'
+        previousPosition.enabled = false;
+        currentPosition.enabled = true;
+        nextPosition.enabled = false;
     }
+
+    
 }
