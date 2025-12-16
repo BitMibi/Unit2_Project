@@ -1111,6 +1111,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0f19af41a67e3b4c9400d6f3fbc7d87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1406564131 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8077341044547109415, guid: ba645466cdca3e14d9b3cd1f0fd1d51c, type: 3}
+  m_PrefabInstance: {fileID: 101334191315583493}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e470a5f1ec856340a069bfed9551348, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1420720747
 GameObject:
   m_ObjectHideFlags: 0
@@ -1703,6 +1714,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2070048303388438442, guid: ba645466cdca3e14d9b3cd1f0fd1d51c, type: 3}
+      propertyPath: playerControl
+      value: 
+      objectReference: {fileID: 1406564131}
     - target: {fileID: 7371507997790415912, guid: ba645466cdca3e14d9b3cd1f0fd1d51c, type: 3}
       propertyPath: m_Name
       value: PlayerCube

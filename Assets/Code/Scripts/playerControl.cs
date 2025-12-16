@@ -30,6 +30,7 @@ public class playerControl : MonoBehaviour
     //Empty objects to keep the liftable in place
     public GameObject holdPosition;
     public GameObject dropPosition;
+    public bool droppable; //Used to stop dropping object through walls
 
 
     //Sound effects
@@ -45,7 +46,7 @@ public class playerControl : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         source = GetComponent<AudioSource>();
 
-        
+        droppable = true;
     }
 
     
@@ -133,7 +134,6 @@ public class playerControl : MonoBehaviour
         }
         else if (holding)
         {
-            holding = false;
             dropObjects();
         }
     }
@@ -149,7 +149,11 @@ public class playerControl : MonoBehaviour
     //Used to drop objects in front of player
     void dropObjects()
     {
-        liftables[arrayPos].transform.position = dropPosition.transform.position;
+        if (droppable)
+        {
+            holding = false;
+            liftables[arrayPos].transform.position = dropPosition.transform.position;
+        }
     }
 
     void rotatePlayer()
