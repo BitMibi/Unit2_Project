@@ -9,9 +9,10 @@ public class openDoor : MonoBehaviour
     private Rigidbody rb;
 
     //Booleans to control movement
-    private bool opening = false; // To trigger the opening of the door
-    private bool closing = false; // To trigger the closing of the door
-    private bool isOpen = false; //Checks if door is open or not
+    public bool opening = false; // To trigger the opening of the door -- Public for doorAutoOpener
+    public bool closing = false; // To trigger the closing of the door -- Public for doorAutoOpener
+    public bool isOpen = false; //Checks if door is open or not
+    public bool buttonDoor; //Used to select whether door is for puzzles (true) or room transistions (false)
     public GameObject openPos;
     public GameObject closePos; 
 
@@ -42,15 +43,15 @@ public class openDoor : MonoBehaviour
         }
     }
 
-    IEnumerator Open()
+    public IEnumerator Open()
     {
         isOpen = true;
         opening = false; //Opens Once
 
         
-        for (float i = rb.transform.position.x; i <= openPos.transform.position.x; i += 0.2f)
+        for (float i = rb.transform.position.y; i >= openPos.transform.position.y; i -= 0.2f)
         {            
-            rb.MovePosition(new Vector3(i, rb.transform.position.y, rb.transform.position.z));
+            rb.MovePosition(new Vector3(rb.transform.position.x, i, rb.transform.position.z));
             yield return new WaitForSeconds(0.1f);
         }
 
@@ -58,16 +59,16 @@ public class openDoor : MonoBehaviour
        
     }
 
-    IEnumerator Close()
+    public IEnumerator Close()
     {
         isOpen = false;
         closing = false;
 
 
         
-        for (float i = rb.transform.position.x; i >= closePos.transform.position.x; i -= 0.2f)
+        for (float i = rb.transform.position.y; i <= closePos.transform.position.y; i += 0.2f)
         {
-            rb.MovePosition(new Vector3(i, rb.transform.position.y, rb.transform.position.z));
+            rb.MovePosition(new Vector3(rb.transform.position.x, i, rb.transform.position.z));
             yield return new WaitForSeconds(0.1f);
         }
 
@@ -76,25 +77,31 @@ public class openDoor : MonoBehaviour
 
     void buttonsCheck()
     {
-       
-        for (int i = 0; i < buttonsRequired.Length; i++)
-        {            
-            if (buttonsRequired[i].isDown && buttonCount < buttonsRequired.Length)      //Checks array for amount of buttons down, increases count if true and the count is less than length of array
-            {
-                buttonCount++;                
-            }
-            else if (!buttonsRequired[i].isDown && buttonCount <= buttonsRequired.Length)
-            {
-                buttonCount = 0;                                                          //Resets count if otherwise                 
-            }
-        }
-        if (buttonCount == buttonsRequired.Length)
+        if (buttonDoor)
         {
-            allButtonsDown = true;
+            for (int i = 0; i < buttonsRequired.Length; i++)
+            {
+                if (buttonsRequired[i].isDown && buttonCount < buttonsRequired.Length)      //Checks array for amount of buttons down, increases count if true and the count is less than length of array
+                {
+                    buttonCount++;
+                }
+                else if (!buttonsRequired[i].isDown && buttonCount <= buttonsRequired.Length)
+                {
+                    buttonCount = 0;                                                          //Resets count if otherwise                 
+                }
+            }
+            if (buttonCount == buttonsRequired.Length)
+            {
+                allButtonsDown = true;
+            }
+            else
+            {
+                allButtonsDown = false;
+            }
         }
         else
         {
-            allButtonsDown = false;
+            allButtonsDown = true;
         }
 
     }

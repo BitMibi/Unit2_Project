@@ -34,6 +34,8 @@ public class CameraControl : MonoBehaviour
     private int previousJump;
     private int nextJump;
 
+    private bool destroyHit;    //Boolean to remake arrays when cameras are destroyed
+
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -47,8 +49,14 @@ public class CameraControl : MonoBehaviour
 
         //Create a position for previous and next to jump to
         previousJump = currentRoomCameras.Length - 1;
-        nextJump = 1;
-
+        if (currentRoomCameras.Length == 1)
+        {
+            nextJump = 0;
+        }
+        else
+        {
+            nextJump = 1;
+        }
         //Set the Positions to the objects in currentRoom   
         previousPosition = currentRoomCameras[previousJump];
         currentPosition = currentRoomCameras[0];
@@ -61,15 +69,15 @@ public class CameraControl : MonoBehaviour
 
         //Change which cameras are on -- 'https://discussions.unity.com/t/changing-between-cameras/3254'
 
-        previousPosition.enabled = false;
+        //previousPosition.enabled = false;
         currentPosition.enabled = true; 
-        nextAudio.enabled = false;
+        //nextAudio.enabled = false;
 
         //Change which listeners are listening
 
-        previousAudio.enabled = false;
+        //previousAudio.enabled = false;
         currentAudio.enabled = true; 
-        nextAudio.enabled = false;
+        //nextAudio.enabled = false;
     }
 
     void OnPrevious()
@@ -139,7 +147,7 @@ public class CameraControl : MonoBehaviour
         currentPosition.enabled = false; //turn off old camera
         currentAudio.enabled = false; //turn off old listener
 
-        switch (roomID)
+        switch (roomID)     //Change array to current room
         {
             case 0: currentRoomCameras = room0Cameras; currentRoomListeners = room0Listeners; break;
             case 1: currentRoomCameras = room1Cameras; currentRoomListeners = room1Listeners; break;
@@ -149,7 +157,14 @@ public class CameraControl : MonoBehaviour
 
         //Create a position for previous and next to jump to
         previousJump = currentRoomCameras.Length - 1;
-        nextJump = 1;
+        if (currentRoomCameras.Length == 1)
+        {
+            nextJump = 0;
+        }
+        else
+        {
+            nextJump = 1;
+        }
 
         //Set the Positions to the objects in currentRoom   
         previousPosition = currentRoomCameras[previousJump];
@@ -163,17 +178,73 @@ public class CameraControl : MonoBehaviour
 
         //Change which cameras are on -- 'https://discussions.unity.com/t/changing-between-cameras/3254'
 
-        previousPosition.enabled = false;
+        //previousPosition.enabled = false;
         currentPosition.enabled = true;
-        nextAudio.enabled = false;
+        //nextAudio.enabled = false;
 
         //Change which listeners are listening
 
-        previousAudio.enabled = false;
+        //previousAudio.enabled = false;
         currentAudio.enabled = true;
-        nextAudio.enabled = false;
+        //nextAudio.enabled = false;
 
     }
 
+    public void remakeArray(int cameraDestroyed)
+    {
+        destroyHit = false;
+
+        //Create a position for previous and next to jump to
+        previousJump = currentRoomCameras.Length - 1;
+        if (currentRoomCameras.Length == 1)
+        {
+            nextJump = 0;
+        }
+        else
+        {
+            nextJump = 1;
+        }
+
+        //Switch to next camera
+        currentPosition.enabled = false;
+        nextPosition.enabled = true;
+
+        //Switch to next listener
+        currentAudio.enabled = false;
+        nextAudio.enabled = true;
+
+        //Change the camera positions
+        previousPosition = currentPosition;
+        currentPosition = nextPosition;
+        nextPosition = currentRoomCameras[nextJump];
+
+        //Change audio positions
+        previousAudio = currentAudio;
+        currentAudio = nextAudio;
+        nextAudio = currentRoomListeners[nextJump];
+
+
+
+        //Remake current array without selected camera
+        for (int i = 0; i < currentRoomCameras.Length; i++)
+        {
+            if (i != cameraDestroyed && !destroyHit)
+            {
+                currentRoomCameras[i] = currentRoomCameras[i];
+                currentRoomListeners[i] = currentRoomListeners[i];
+            }
+            else if (i == cameraDestroyed)
+            {
+                destroyHit = true;
+
+            }
+            else
+            {
+                currentRoomCameras[i - 1] = currentRoomCameras[i];  //Removes selected camera from array
+                currentRoomListeners[i - 1] = currentRoomListeners[i]; //removes selected audio from array
+            }
+                
+        }
+    }
 
 }

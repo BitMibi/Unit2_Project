@@ -8,7 +8,6 @@ public class groundCheck : MonoBehaviour
     
     private void OnTriggerEnter(Collider boxCollider)
     {
-        Debug.Log("Collided");
         playerControl.isGrounded = true;
     }
 

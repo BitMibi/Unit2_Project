@@ -1,17 +1,15 @@
 using UnityEngine;
 
-public class roomChanger : MonoBehaviour
+public class cameraDestroyer : MonoBehaviour
 {
-
-    public int roomChange;  //Integer for which room to change to on trigger
+    public int cameraDestroyed;  //Integer for which camera to be destroyed
     public CameraControl CameraControl;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            CameraControl.roomID = roomChange;
-            CameraControl.RoomChanged();
+            CameraControl.remakeArray(cameraDestroyed);
             Destroy(gameObject);
         }
     }

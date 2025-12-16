@@ -34,7 +34,7 @@ public class playerControl : MonoBehaviour
 
     //Sound effects
     private AudioSource source;
-    public AudioClip collisionSound;
+    public AudioClip jumpSound;
 
     
 
@@ -94,7 +94,7 @@ public class playerControl : MonoBehaviour
         if (isGrounded)
         {
             rb.AddForce(new Vector3(0, jumpForce, 0));
-            source.PlayOneShot(collisionSound, 1.0f);
+            source.PlayOneShot(jumpSound, 1.0f);
         }
         isGrounded = false;
     }
