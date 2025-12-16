@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
@@ -19,6 +20,8 @@ public class buttonCheck : MonoBehaviour
     public GameObject downPos; //Up and down positions to move to
 
     public bool heavyButton; //Bool to differentiate between heavy and light buttons
+    public bool randomButton;
+    private float randomFloat;
    
 
     void Start()
@@ -73,7 +76,18 @@ public class buttonCheck : MonoBehaviour
             if (!isDown && collisionsHappening >= 1)
             {
                 StartCoroutine(Down());
-                isDown = true;
+                if (randomButton)       //If button is random
+                {
+                    randomFloat = UnityEngine.Random.value;
+                    if (randomFloat >= 0.5)     //Coin flip for isDown
+                    {
+                        isDown = true;
+                    }
+                }
+                else        //If button is NOT random
+                {
+                    isDown = true;      //Treat as usual
+                }
             }
         }
         
@@ -93,7 +107,7 @@ public class buttonCheck : MonoBehaviour
         else if (!heavyButton)
         {
             collisionsHappening--;
-            if (isDown && collisionsHappening == 0)
+            if ((isDown || randomButton) && collisionsHappening == 0)
             {
                 StartCoroutine(Up());
                 isDown = false;
