@@ -20,13 +20,18 @@ public class buttonCheck : MonoBehaviour
     public GameObject downPos; //Up and down positions to move to
 
     public bool heavyButton; //Bool to differentiate between heavy and light buttons
+
+    //For random button
     public bool randomButton;
     private float randomFloat;
+    private AudioSource audioSource;
+    public AudioClip buzzer;
    
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     IEnumerator Up()
@@ -60,33 +65,39 @@ public class buttonCheck : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-
-        if (heavyButton && collision.gameObject.transform.childCount == 0)     //Heavy buttons cannot be pushed down by light cubes. (Light cubes have exactly 1 child.)
+        if (!collision.gameObject.CompareTag("Button"))
         {
-            collisionsHappening++;
-            if (!isDown && collisionsHappening >= 1)
+            if (heavyButton && collision.gameObject.transform.childCount == 0)     //Heavy buttons cannot be pushed down by light cubes. (Light cubes have exactly 1 child.)
             {
-                StartCoroutine(Down());
-                isDown = true;
-            }
-        }
-        else if (!heavyButton)          //Non-heavy buttons can be pushed down by any object
-        {
-            collisionsHappening++;
-            if (!isDown && collisionsHappening >= 1)
-            {
-                StartCoroutine(Down());
-                if (randomButton)       //If button is random
+                collisionsHappening++;
+                if (!isDown && collisionsHappening >= 1)
                 {
-                    randomFloat = UnityEngine.Random.value;
-                    if (randomFloat >= 0.5)     //Coin flip for isDown
-                    {
-                        isDown = true;
-                    }
+                    StartCoroutine(Down());
+                    isDown = true;
                 }
-                else        //If button is NOT random
+            }
+            else if (!heavyButton)          //Non-heavy buttons can be pushed down by any object
+            {
+                collisionsHappening++;
+                if (!isDown && collisionsHappening >= 1)
                 {
-                    isDown = true;      //Treat as usual
+                    StartCoroutine(Down());
+                    if (randomButton)       //If button is random
+                    {
+                        randomFloat = UnityEngine.Random.value;
+                        if (randomFloat >= 0.5)     //Coin flip for isDown
+                        {
+                            isDown = true;
+                        }
+                        else
+                        {
+                            audioSource.PlayOneShot(buzzer, 0.5f);
+                        }
+                    }
+                    else        //If button is NOT random
+                    {
+                        isDown = true;      //Treat as usual
+                    }
                 }
             }
         }

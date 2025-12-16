@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6181968287843495405}
   m_Layer: 0
   m_Name: AutoDoorOpenTrigger
-  m_TagString: Untagged
+  m_TagString: Trigger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67,6 +67,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f547ab3c4fa4b334d86869c88fd41e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::doorAutoOpener
+  beOpen: 0
+  openDoor: {fileID: 0}
 --- !u!1 &4338268506798781299
 GameObject:
   m_ObjectHideFlags: 0

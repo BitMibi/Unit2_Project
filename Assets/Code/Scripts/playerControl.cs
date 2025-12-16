@@ -101,7 +101,7 @@ public class playerControl : MonoBehaviour
     }
 
     //Checks if player object is in range to pick up objects
-    void OnTriggerEnter(Collider liftable)
+    void OnTriggerStay(Collider liftable)
     {
         inRange = true;
         if (!holding)

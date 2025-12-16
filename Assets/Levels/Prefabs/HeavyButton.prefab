@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 35965813850467168}
   m_Layer: 0
   m_Name: HeavyButton
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -79,7 +79,7 @@ GameObject:
   - component: {fileID: 4748166660481832284}
   m_Layer: 0
   m_Name: PressurePad
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -221,6 +221,8 @@ MonoBehaviour:
   upPos: {fileID: 7666086816837537065}
   downPos: {fileID: 8192474583314931360}
   heavyButton: 1
+  randomButton: 0
+  buzzer: {fileID: 0}
 --- !u!1 &5037168474471124006
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,7 +237,7 @@ GameObject:
   - component: {fileID: 2183870489091246453}
   m_Layer: 0
   m_Name: Base
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -343,7 +345,7 @@ GameObject:
   - component: {fileID: 7859570869090568576}
   m_Layer: 0
   m_Name: PadUpPos
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -374,7 +376,7 @@ GameObject:
   - component: {fileID: 9069823072483354334}
   m_Layer: 0
   m_Name: PadDownPos
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
