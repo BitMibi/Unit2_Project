@@ -15,8 +15,7 @@ public class playerControl : MonoBehaviour
     public float airSpeed; //Speed used in air
 
     public float jumpForce; // Force used when jumping
-    public GameObject GroundPlane;
-    private bool isGrounded; //Checks if grounded
+    public bool isGrounded; //Checks if grounded -- public for ground check
     //For relative to camera -- from 'https://www.youtube.com/watch?v=LaO1GDf2v3c'
     public CameraControl cameraControl;
 
@@ -45,6 +44,8 @@ public class playerControl : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         source = GetComponent<AudioSource>();
+
+        
     }
 
     
@@ -87,22 +88,13 @@ public class playerControl : MonoBehaviour
         }
     }
 
-
     //Used to Jump
-    private void OnCollisionEnter(Collision GroundPlane)
-    {
-        isGrounded = true;
-        source.PlayOneShot(collisionSound, 1.0f);
-    }
-
-    
-        
-    
     void OnJump()
     {
         if (isGrounded)
         {
             rb.AddForce(new Vector3(0, jumpForce, 0));
+            source.PlayOneShot(collisionSound, 1.0f);
         }
         isGrounded = false;
     }
