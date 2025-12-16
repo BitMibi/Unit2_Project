@@ -31,7 +31,11 @@ public class playerControl : MonoBehaviour
     //Empty objects to keep the liftable in place
     public GameObject holdPosition;
     public GameObject dropPosition;
-    
+
+
+    //Sound effects
+    private AudioSource source;
+    public AudioClip collisionSound;
 
     
 
@@ -40,7 +44,7 @@ public class playerControl : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        
+        source = GetComponent<AudioSource>();
     }
 
     
@@ -88,7 +92,12 @@ public class playerControl : MonoBehaviour
     private void OnCollisionEnter(Collision GroundPlane)
     {
         isGrounded = true;
+        source.PlayOneShot(collisionSound, 1.0f);
     }
+
+    
+        
+    
     void OnJump()
     {
         if (isGrounded)
