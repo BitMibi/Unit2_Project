@@ -537,6 +537,73 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6971934699736522714, guid: ed1630d38ba12a8458214b9b56c80590, type: 3}
   m_PrefabInstance: {fileID: 1350399432556931799}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &934939640
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 934939641}
+  - component: {fileID: 934939643}
+  - component: {fileID: 934939642}
+  m_Layer: 0
+  m_Name: groundCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &934939641
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934939640}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.0711, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1406564128}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &934939642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934939640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10281d43c22c457468a584f406943a9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  playerControl: {fileID: 1406564122}
+--- !u!65 &934939643
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934939640}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5, y: 0.06859016, z: 0.5}
+  m_Center: {x: 0, y: -0.58, z: 0}
 --- !u!1 &1112965906
 GameObject:
   m_ObjectHideFlags: 0
@@ -994,14 +1061,14 @@ MonoBehaviour:
   speed: 15
   airSpeed: 7.5
   jumpForce: 250
-  GroundPlane: {fileID: 1335409640}
+  isGrounded: 0
   cameraControl: {fileID: 1406564129}
   liftables:
   - {fileID: 894033935}
   - {fileID: 5026022017577150222}
   holdPosition: {fileID: 1548696186}
   dropPosition: {fileID: 1699146947}
-  collisionSound: {fileID: 8300000, guid: ee786d7b011ec0a49a731c38ccadfbc2, type: 3}
+  collisionSound: {fileID: 8300000, guid: d2252729c40ec8a46a91f20986b51c55, type: 3}
 --- !u!114 &1406564123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1151,6 +1218,7 @@ Transform:
   m_Children:
   - {fileID: 1548696187}
   - {fileID: 1699146948}
+  - {fileID: 934939641}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1406564129
