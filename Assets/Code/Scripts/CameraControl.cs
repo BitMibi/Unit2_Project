@@ -3,6 +3,7 @@ using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 using System.Runtime.CompilerServices;
 using System.Collections.Generic;
+using System;
 
 
 public class CameraControl : MonoBehaviour
@@ -194,17 +195,6 @@ public class CameraControl : MonoBehaviour
     {
         destroyHit = false;
 
-        //Create a position for previous and next to jump to
-        previousJump = currentRoomCameras.Length - 1;
-        if (currentRoomCameras.Length == 1)
-        {
-            nextJump = 0;
-        }
-        else
-        {
-            nextJump = 1;
-        }
-
         //Switch to next camera
         currentPosition.enabled = false;
         nextPosition.enabled = true;
@@ -212,17 +202,6 @@ public class CameraControl : MonoBehaviour
         //Switch to next listener
         currentAudio.enabled = false;
         nextAudio.enabled = true;
-
-        //Change the camera positions
-        previousPosition = currentPosition;
-        currentPosition = nextPosition;
-        nextPosition = currentRoomCameras[nextJump];
-
-        //Change audio positions
-        previousAudio = currentAudio;
-        currentAudio = nextAudio;
-        nextAudio = currentRoomListeners[nextJump];
-
 
 
         //Remake current array without selected camera
@@ -243,8 +222,32 @@ public class CameraControl : MonoBehaviour
                 currentRoomCameras[i - 1] = currentRoomCameras[i];  //Removes selected camera from array
                 currentRoomListeners[i - 1] = currentRoomListeners[i]; //removes selected audio from array
             }
-                
+             
         }
+
+        Array.Resize(ref currentRoomCameras, currentRoomCameras.Length - 1);        //From "https://discussions.unity.com/t/resize-an-array-in-c/430138/3"
+        Array.Resize(ref currentRoomListeners, currentRoomListeners.Length - 1);
+
+        //Create a position for previous and next to jump to
+        previousJump = currentRoomCameras.Length - 1;
+        if (currentRoomCameras.Length == 1)
+        {
+            nextJump = 0;
+        }
+        else
+        {
+            nextJump = 1;
+        }
+
+        //Change the camera positions
+        previousPosition = currentRoomCameras[previousJump];
+        currentPosition = currentRoomCameras[0];
+        nextPosition = currentRoomCameras[nextJump];
+
+        //Change audio positions
+        previousAudio = currentRoomListeners[previousJump];
+        currentAudio = currentRoomListeners[0];
+        nextAudio = currentRoomListeners[nextJump];
     }
 
 }
