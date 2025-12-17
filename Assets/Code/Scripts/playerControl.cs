@@ -57,7 +57,7 @@ public class playerControl : MonoBehaviour
         Vector2 movement = movementValue.Get<Vector2>();
         
 
-        //*Change input based on camera -- from 'https://www.reddit.com/r/Unity3D/comments/eklm3r/how_to_move_player_relative_to_camera/'
+        //Change input based on camera -- from 'https://www.reddit.com/r/Unity3D/comments/eklm3r/how_to_move_player_relative_to_camera/'
         
         movementX = movement.x;
         movementY = movement.y;

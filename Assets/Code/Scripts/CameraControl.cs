@@ -33,7 +33,7 @@ public class CameraControl : MonoBehaviour
     private AudioListener nextAudio;
 
     private int previousJump;
-    private int nextJump;
+    private int nextJump;       //Positions for previous and next to jump to if need be
 
     private bool destroyHit;    //Boolean to remake arrays when cameras are destroyed
 
@@ -70,15 +70,12 @@ public class CameraControl : MonoBehaviour
 
         //Change which cameras are on -- 'https://discussions.unity.com/t/changing-between-cameras/3254'
 
-        //previousPosition.enabled = false;
         currentPosition.enabled = true; 
-        //nextAudio.enabled = false;
-
+        
         //Change which listeners are listening
 
-        //previousAudio.enabled = false;
         currentAudio.enabled = true; 
-        //nextAudio.enabled = false;
+        
     }
 
     void OnPrevious()
@@ -179,15 +176,15 @@ public class CameraControl : MonoBehaviour
 
         //Change which cameras are on -- 'https://discussions.unity.com/t/changing-between-cameras/3254'
 
-        //previousPosition.enabled = false;
+        
         currentPosition.enabled = true;
-        //nextAudio.enabled = false;
+        
 
         //Change which listeners are listening
 
-        //previousAudio.enabled = false;
+        
         currentAudio.enabled = true;
-        //nextAudio.enabled = false;
+        
 
     }
 
