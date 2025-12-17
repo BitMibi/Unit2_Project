@@ -299,7 +299,7 @@ MonoBehaviour:
   holdPosition: {fileID: 8737410662633242402}
   dropPosition: {fileID: 6355363443125007018}
   droppable: 0
-  jumpSound: {fileID: 8300000, guid: d2252729c40ec8a46a91f20986b51c55, type: 3}
+  jumpSound: {fileID: 8300000, guid: 5dd4f56aef2a121459e6cc59f8f70551, type: 3}
 --- !u!114 &8290512986808744054
 MonoBehaviour:
   m_ObjectHideFlags: 0
