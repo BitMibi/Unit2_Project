@@ -1174,7 +1174,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3717118168810002173, guid: 8978205210f87e54b89a9573e7f2a502, type: 3}
       propertyPath: sceneToLoad
-      value: testLevel
+      value: Level2
       objectReference: {fileID: 0}
     - target: {fileID: 6798088318250078079, guid: 8978205210f87e54b89a9573e7f2a502, type: 3}
       propertyPath: m_LocalScale.x
